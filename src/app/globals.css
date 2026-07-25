@@ -3,36 +3,54 @@
 /*
  * Velantis design tokens — dark-only, cinematic.
  * Sibling language to Drive's DS (Desktop/Drive/DESIGN_LANGUAGE.md):
- * near-black ground, hairline seams, mono telemetry labels, one accent.
- * Velantis brand accent is warm ember; Drive's own blue appears only
- * inside Drive product mockups.
+ * hairline seams, mono telemetry labels, one accent.
+ *
+ * Ground system is a two-temperature duotone rather than a single
+ * near-black: cool asphalt for most of the page, warm oxide for the
+ * flagship and the closing bookend. Both are flat fills — the depth
+ * comes from temperature contrast and hairlines, never from gradients.
+ * Ember stays the only accent; xenon is a cold white for telemetry
+ * numerals, deliberately desaturated so it reads as a tint, not a
+ * second brand color.
  */
 :root {
-  --bg: #0a0a10;
-  --surface: #101018;
-  --raised: #14141c;
-  --ink: #f2efe9;
-  --muted: #8b8994;
-  --faint: #55535e;
+  --asphalt: #10131a;
+  --oxide: #191410;
+  --surface: #161a22;
+  --surface-warm: #201a15;
+  --ink: #f4f1ea;
+  --muted: #8d95a3;
+  --faint: #565e6b;
   --accent: #ee8434;
-  --hairline: rgba(242, 239, 233, 0.08);
-  --hairline-strong: rgba(242, 239, 233, 0.16);
+  --xenon: #b9ceda;
+  --hairline: rgba(244, 241, 234, 0.08);
+  --hairline-strong: rgba(244, 241, 234, 0.16);
+
+  /* Motion. Strong ease-out — the stock CSS curves read as sluggish. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --dur-press: 140ms;
+  --dur-hover: 200ms;
+  --dur-reveal: 500ms;
 }
 
 @theme inline {
-  --color-bg: var(--bg);
+  --color-bg: var(--asphalt);
+  --color-warm: var(--oxide);
   --color-surface: var(--surface);
-  --color-raised: var(--raised);
+  --color-surface-warm: var(--surface-warm);
+  --color-raised: var(--surface);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-faint: var(--faint);
   --color-accent: var(--accent);
+  --color-xenon: var(--xenon);
   --color-hairline: var(--hairline);
   --color-hairline-strong: var(--hairline-strong);
 
   --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, monospace;
+  --font-body: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
 }
 
 html {
@@ -40,18 +58,23 @@ html {
 }
 
 body {
-  background: var(--bg);
+  background: var(--asphalt);
   color: var(--ink);
 }
 
 ::selection {
   background: var(--accent);
-  color: var(--bg);
+  color: var(--asphalt);
 }
 
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+}
+
+/* Warm ground for the flagship and the closing section. */
+.ground-warm {
+  background: var(--oxide);
 }
 
 /* Film grain — static texture, not motion. Matches Drive's GrainOverlay. */
@@ -68,10 +91,10 @@ body {
 /* Scroll-reveal: fade + small rise, fired once per element on entry. */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(18px);
   transition:
-    opacity 0.8s cubic-bezier(0.2, 0.6, 0.2, 1),
-    transform 0.8s cubic-bezier(0.2, 0.6, 0.2, 1);
+    opacity var(--dur-reveal) var(--ease-out),
+    transform var(--dur-reveal) var(--ease-out);
   transition-delay: var(--reveal-delay, 0ms);
 }
 
@@ -80,22 +103,127 @@ body {
   transform: none;
 }
 
+/*
+ * Headline reveal: the line wipes up from behind its own baseline rather
+ * than fading. Used once per section so it stays an event, not a habit.
+ */
+/*
+ * The mask is an overflow window, not a clip-path on the target itself:
+ * a target clipped to zero area reports as non-intersecting, so an
+ * IntersectionObserver would never fire the class that un-clips it.
+ * Transform also keeps the animation on the GPU.
+ */
+.reveal-wipe {
+  overflow: hidden;
+}
+
+.reveal-wipe > * {
+  /* Room inside the masked box for descenders. */
+  padding-bottom: 0.14em;
+  transform: translateY(104%);
+  opacity: 0;
+  transition:
+    transform 700ms var(--ease-out),
+    opacity 320ms var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-wipe.is-visible > * {
+  transform: none;
+  opacity: 1;
+}
+
+/* Pressable surfaces answer the press immediately. */
+.pressable {
+  transition:
+    transform var(--dur-press) var(--ease-out),
+    border-color var(--dur-hover) ease,
+    color var(--dur-hover) ease;
+}
+
+.pressable:active {
+  transform: scale(0.97);
+}
+
+/*
+ * Channel row — the hover reward on list rows. An ember rule wipes in from
+ * the left edge, the way a telemetry channel arms. Fine pointers only:
+ * touch would latch it on tap.
+ */
+.channel {
+  position: relative;
+}
+
+.channel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: 50% 0;
+  transition: transform 260ms var(--ease-out);
+}
+
+.channel-title {
+  transition: transform 260ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .channel:hover::before {
+    transform: scaleY(1);
+  }
+  .channel:hover .channel-title {
+    transform: translateX(14px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
   .reveal {
     transform: none;
-    transition: opacity 0.5s ease;
+    transition: opacity 300ms ease;
+  }
+  .reveal-wipe > * {
+    transform: none;
+    transition: opacity 300ms ease;
+  }
+  .channel-title {
+    transition: none;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .channel:hover .channel-title {
+      transform: none;
+    }
+  }
+  .pressable:active {
+    transform: none;
   }
 }
 
 /* Without JS the IntersectionObserver never fires — show everything. */
 @media (scripting: none) {
-  .reveal {
+  .reveal,
+  .reveal-wipe > * {
     opacity: 1;
     transform: none;
   }
+}
+
+/*
+ * Screenshot rail — scrolls horizontally without a visible track. The phones
+ * themselves are the affordance: one is always cut by the viewport edge.
+ */
+.rail {
+  scrollbar-width: none;
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
 }
 
 /* Legal pages — prose styling for the policy copy. */
@@ -180,7 +308,7 @@ body {
 }
 
 .legal-prose .legal-card dt {
-  font-family: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, monospace;
+  font-family: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
   font-size: 0.6875rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;

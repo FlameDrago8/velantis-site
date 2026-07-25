@@ -9,7 +9,7 @@ export default function About() {
           <Reveal>
             <Eyebrow n="03">About</Eyebrow>
           </Reveal>
-          <Reveal delay={80}>
+          <Reveal variant="wipe" delay={80}>
             <h2 className="mt-8 font-display text-4xl font-bold tracking-tight md:text-5xl">
               Founder-built,
               <br />

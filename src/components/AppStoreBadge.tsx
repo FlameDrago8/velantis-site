@@ -5,7 +5,7 @@ export default function AppStoreBadge() {
   return (
     <a
       href={APP_STORE_URL}
-      className="inline-flex items-center gap-3 rounded-full border border-hairline-strong px-6 py-3.5 transition-colors hover:border-accent hover:text-accent"
+      className="pressable inline-flex items-center gap-3 rounded-full border border-hairline-strong px-6 py-3.5 hover:border-accent hover:text-accent"
     >
       <svg
         viewBox="0 0 24 24"
