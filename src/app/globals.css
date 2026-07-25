@@ -98,13 +98,21 @@ body {
   }
 }
 
-/* Legal pages — prose styling for the pasted-in policy copy. */
+/* Legal pages — prose styling for the policy copy. */
 .legal-prose h2 {
   font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
   font-weight: 600;
   font-size: 1.25rem;
   letter-spacing: -0.01em;
   margin: 2.5rem 0 0.75rem;
+}
+
+.legal-prose h3 {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: -0.005em;
+  margin: 1.75rem 0 0.5rem;
 }
 
 .legal-prose p,
@@ -123,9 +131,68 @@ body {
   margin-bottom: 1rem;
 }
 
+.legal-prose li {
+  margin-bottom: 0.4rem;
+}
+
+.legal-prose li::marker {
+  color: var(--accent);
+}
+
+.legal-prose strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
 .legal-prose a {
   color: var(--ink);
   text-decoration: underline;
   text-decoration-color: var(--accent);
   text-underline-offset: 3px;
+}
+
+/*
+ * All-caps statutory blocks (disclaimers, liability caps). Set apart on a
+ * raised panel with an accent seam — legally conspicuous without shouting
+ * in the reading flow.
+ */
+.legal-prose .legal-caps {
+  margin: 1.5rem 0;
+  padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+  border: 1px solid var(--hairline);
+  border-left: 2px solid var(--accent);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+/* Contact block — mono label over ink value, same as the site's data rows. */
+.legal-prose .legal-card {
+  margin: 1.5rem 0;
+  padding: 1.75rem;
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.legal-prose .legal-card dt {
+  font-family: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.legal-prose .legal-card dd {
+  margin: 0.35rem 0 0;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.legal-prose .legal-card dd + dt {
+  margin-top: 1.25rem;
 }

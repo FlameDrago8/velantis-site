@@ -1,8 +1,8 @@
 import Eyebrow from "@/components/Eyebrow";
 import Reveal from "@/components/Reveal";
 
-/* TODO: confirm the public contact address before launch. */
-const CONTACT_EMAIL = "hello@velantis.com";
+/* Matches the address in the legal pages — the one Velantis actually owns. */
+const CONTACT_EMAIL = "velantis.app@gmail.com";
 
 export default function Contact() {
   return (
