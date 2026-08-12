@@ -295,13 +295,13 @@ export default function PrivacyPage() {
         consent, we will take steps to delete that information promptly. If you
         believe a child under 13 has provided us with personal information,
         please contact us at{" "}
-        <a href="mailto:velantis.app@gmail.com">velantis.app@gmail.com</a>.
+        <a href="mailto:support@velantisco.com">support@velantisco.com</a>.
       </p>
       <p>
         Parents and legal guardians may contact us at any time to review,
         update, or request deletion of their child’s personal information by
         contacting us at{" "}
-        <a href="mailto:velantis.app@gmail.com">velantis.app@gmail.com</a>.
+        <a href="mailto:support@velantisco.com">support@velantisco.com</a>.
       </p>
 
       <h2>7. Your Rights and Choices</h2>
@@ -312,14 +312,14 @@ export default function PrivacyPage() {
         account settings within the Application. If you need to access or
         correct information that is not available through your account settings,
         please contact us at{" "}
-        <a href="mailto:velantis.app@gmail.com">velantis.app@gmail.com</a>.
+        <a href="mailto:support@velantisco.com">support@velantisco.com</a>.
       </p>
 
       <h3>7.2 Account Deletion</h3>
       <p>
         You may request deletion of your account and associated personal
         information at any time by contacting us at{" "}
-        <a href="mailto:velantis.app@gmail.com">velantis.app@gmail.com</a> or
+        <a href="mailto:support@velantisco.com">support@velantisco.com</a> or
         through the account settings within the Application. Upon receiving a
         verified deletion request, we will delete your personal information from
         our active systems within thirty (30) days, except as required by law or
@@ -375,7 +375,7 @@ export default function PrivacyPage() {
       </ul>
       <p>
         To exercise any of these rights, please contact us at{" "}
-        <a href="mailto:velantis.app@gmail.com">velantis.app@gmail.com</a>. We
+        <a href="mailto:support@velantisco.com">support@velantisco.com</a>. We
         will respond to verified requests within forty-five (45) days as
         required by applicable law.
       </p>
@@ -439,7 +439,7 @@ export default function PrivacyPage() {
         <dd>Velantis LLC</dd>
         <dt>Email</dt>
         <dd>
-          <a href="mailto:velantis.app@gmail.com">velantis.app@gmail.com</a>
+          <a href="mailto:support@velantisco.com">support@velantisco.com</a>
         </dd>
       </dl>
       <p>

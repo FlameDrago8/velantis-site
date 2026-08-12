@@ -2,7 +2,7 @@ import Eyebrow from "@/components/Eyebrow";
 import Reveal from "@/components/Reveal";
 
 /* Matches the address in the legal pages — the one Velantis actually owns. */
-const CONTACT_EMAIL = "velantis.app@gmail.com";
+const CONTACT_EMAIL = "support@velantisco.com";
 
 export default function Contact() {
   return (

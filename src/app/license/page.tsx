@@ -369,7 +369,7 @@ export default function LicensePage() {
       <h2>17. Contact Information</h2>
       <p>
         If you have any questions about this Agreement, please contact Velantis
-        at <a href="mailto:velantis.app@gmail.com">velantis.app@gmail.com</a>.
+        at <a href="mailto:support@velantisco.com">support@velantisco.com</a>.
       </p>
 
       <h2>18. Apple App Store Additional Terms</h2>
