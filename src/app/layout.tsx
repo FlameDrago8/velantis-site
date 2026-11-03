@@ -1,36 +1,40 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, Instrument_Sans, Space_Grotesk } from "next/font/google";
+import { Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+/*
+ * Archivo carries both voices: its widest cut (wdth 125) for display caps
+ * that rhyme with the extended wordmark, its normal width for reading.
+ */
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
+  axes: ["wdth"],
 });
 
-const instrumentSans = Instrument_Sans({
-  variable: "--font-instrument-sans",
-  subsets: ["latin"],
-});
-
-/* Plex Mono carries the telemetry labels — engineered, not the system default. */
+/* Plex Mono carries the readouts: labels, designations, units. */
 const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.velantisco.com"),
   title: {
     default: "Velantis",
-    template: "%s — Velantis",
+    template: "%s | Velantis",
   },
   description:
-    "Building AI-native products, starting with how people learn to drive.",
+    "Velantis builds AI for the physical world: models we train ourselves, running on the device, starting with Drive, an AI driving coach.",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#10131A",
-  colorScheme: "dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+    { media: "(prefers-color-scheme: light)", color: "#f4f4f1" },
+  ],
+  colorScheme: "dark light",
 };
 
 export default function RootLayout({
@@ -42,9 +46,9 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${spaceGrotesk.variable} ${instrumentSans.variable} ${plexMono.variable} h-full antialiased`}
+      className={`${archivo.variable} ${plexMono.variable} h-full antialiased`}
     >
-      <body className="grain min-h-full font-body">{children}</body>
+      <body className="min-h-full">{children}</body>
     </html>
   );
 }

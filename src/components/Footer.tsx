@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { Wordmark } from "@/components/brand/Logo";
+
 const legalLinks = [
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms" },
@@ -8,25 +10,24 @@ const legalLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-hairline">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 py-10 md:flex-row">
-        <span className="font-display text-xs font-bold tracking-[0.3em] text-muted">
-          VELANTIS
-        </span>
-        <nav className="flex gap-7 font-mono text-[11px] tracking-[0.18em] uppercase">
-          {legalLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-muted transition-colors hover:text-ink"
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-        <span className="font-mono text-[11px] tracking-[0.18em] text-faint uppercase">
-          © 2026 Velantis
-        </span>
+    <footer>
+      <div className="mx-auto max-w-7xl px-4 pt-16 pb-10 sm:px-6">
+        <Wordmark className="h-auto w-full text-ink" />
+        <div className="mt-12 flex flex-col gap-6 border-t border-rule pt-6 md:flex-row md:items-center md:justify-between">
+          <span className="label text-faint">&copy; 2026 Velantis LLC</span>
+          <nav className="flex gap-7">
+            {legalLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="label text-muted transition-colors hover:text-ink"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+          <span className="label text-faint">velantisco.com</span>
+        </div>
       </div>
     </footer>
   );

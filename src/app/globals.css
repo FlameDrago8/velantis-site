@@ -1,55 +1,103 @@
 @import "tailwindcss";
 
 /*
- * Velantis design tokens — dark-only, cinematic.
- * Sibling language to Drive's DS (Desktop/Drive/DESIGN_LANGUAGE.md):
- * hairline seams, mono telemetry labels, one accent.
+ * Velantis design tokens.
  *
- * Ground system is a two-temperature duotone rather than a single
- * near-black: cool asphalt for most of the page, warm oxide for the
- * flagship and the closing bookend. Both are flat fills — the depth
- * comes from temperature contrast and hairlines, never from gradients.
- * Ember stays the only accent; xenon is a cold white for telemetry
- * numerals, deliberately desaturated so it reads as a tint, not a
- * second brand color.
+ * The site is the company, not the app. It borrows Drive v2's palette
+ * ("Road Furniture") and its rules, but sets them as an engineering
+ * document rather than an iOS screen: an extended monoline wordmark,
+ * a drafting grid, mono readouts, hairline rules and square corners.
+ *
+ * Rules carried over from Drive:
+ *  - Blue (tint) means "you can press this", plus the zero tick in the logo.
+ *  - Yellow (sign) appears on exactly one object: the Focus Sign.
+ *  - Score colours (great / okay / poor) describe how someone drove, nothing else.
+ *  - Flat fills only. No gradients, glow, grain or 3D.
+ *  - Quiet at rest. Things move once, on arrival, and never loop.
+ *  - Every colour has a light-mode counterpart.
  */
 :root {
-  --asphalt: #10131a;
-  --oxide: #191410;
-  --surface: #161a22;
-  --surface-warm: #201a15;
-  --ink: #f4f1ea;
-  --muted: #8d95a3;
-  --faint: #565e6b;
-  --accent: #ee8434;
-  --xenon: #b9ceda;
-  --hairline: rgba(244, 241, 234, 0.08);
-  --hairline-strong: rgba(244, 241, 234, 0.16);
+  --bg: #000000;
+  --surface: #0b0b0d;
+  --card: #141416;
+  --card2: #1c1c1e;
+  --ink: #ffffff;
+  --muted: #98989f;
+  --faint: #636366;
+  --paint: #7c7c80;
+  --rule: rgba(255, 255, 255, 0.09);
+  --rule-strong: rgba(255, 255, 255, 0.18);
+  --grid: rgba(255, 255, 255, 0.035);
+  --tint: #1e96ff;
+  --tint-fill: #0a73e5;
+  --on-tint: #ffffff;
+  --sign: #ffd60a;
+  --sign-ink: #111111;
+  --great: #30d158;
+  --okay: #ff9f0a;
+  --poor: #ff453a;
+  --marker-ink: #000000;
+  --guide: #0f7a5a;
+  --plate: #3a3a3c;
 
-  /* Motion. Strong ease-out — the stock CSS curves read as sluggish. */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --dur-press: 140ms;
   --dur-hover: 200ms;
-  --dur-reveal: 500ms;
+  --dur-reveal: 560ms;
+
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f4f4f1;
+    --surface: #ececE8;
+    --card: #ffffff;
+    --card2: #efeff4;
+    --ink: #000000;
+    --muted: #6c6c70;
+    --faint: #8e8e93;
+    --paint: #86868b;
+    --rule: rgba(0, 0, 0, 0.1);
+    --rule-strong: rgba(0, 0, 0, 0.22);
+    --grid: rgba(0, 0, 0, 0.045);
+    --tint: #0a73e5;
+    --tint-fill: #0a73e5;
+    --sign: #ffcc00;
+    --great: #15803d;
+    --okay: #b45309;
+    --poor: #9f1239;
+    --marker-ink: #ffffff;
+    --guide: #005c46;
+    --plate: #e5e5ea;
+
+    color-scheme: light;
+  }
 }
 
 @theme inline {
-  --color-bg: var(--asphalt);
-  --color-warm: var(--oxide);
+  --color-bg: var(--bg);
   --color-surface: var(--surface);
-  --color-surface-warm: var(--surface-warm);
-  --color-raised: var(--surface);
+  --color-card: var(--card);
+  --color-card2: var(--card2);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-faint: var(--faint);
-  --color-accent: var(--accent);
-  --color-xenon: var(--xenon);
-  --color-hairline: var(--hairline);
-  --color-hairline-strong: var(--hairline-strong);
+  --color-paint: var(--paint);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-tint: var(--tint);
+  --color-tint-fill: var(--tint-fill);
+  --color-on-tint: var(--on-tint);
+  --color-sign: var(--sign);
+  --color-sign-ink: var(--sign-ink);
+  --color-great: var(--great);
+  --color-okay: var(--okay);
+  --color-poor: var(--poor);
+  --color-plate: var(--plate);
+  --color-guide: var(--guide);
 
-  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
 }
 
@@ -58,125 +106,166 @@ html {
 }
 
 body {
-  background: var(--asphalt);
+  background: var(--bg);
   color: var(--ink);
+  font-family: var(--font-sans);
+  font-variation-settings: "wdth" 100;
 }
 
 ::selection {
-  background: var(--accent);
-  color: var(--asphalt);
+  background: var(--tint);
+  color: var(--on-tint);
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--tint);
   outline-offset: 3px;
 }
 
-/* Warm ground for the flagship and the closing section. */
-.ground-warm {
-  background: var(--oxide);
+/*
+ * Display type: the wordmark's voice. Archivo stretched to its widest
+ * cut, set in caps, so headlines rhyme with the extended monoline logo.
+ */
+.display {
+  font-family: var(--font-sans);
+  font-variation-settings: "wdth" 125;
+  font-stretch: 125%;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 0.98;
 }
 
-/* Film grain — static texture, not motion. Matches Drive's GrainOverlay. */
-.grain::after {
+/* Mono readout label: the instrument's small print. */
+.label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Drafting grid: a static 48px field with a heavier line every 4 cells. */
+.drafting {
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
+}
+
+/* Corner registration marks, as on a drawing sheet. */
+.registered {
+  position: relative;
+}
+.registered::before,
+.registered::after {
   content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 50;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--rule-strong);
+  border-style: solid;
   pointer-events: none;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.registered::before {
+  top: -1px;
+  left: -1px;
+  border-width: 1px 0 0 1px;
+}
+.registered::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 1px 1px 0;
 }
 
-/* Scroll-reveal: fade + small rise, fired once per element on entry. */
+/* Scroll reveal: fade and a short rise, fired once per element. */
 .reveal {
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(14px);
   transition:
     opacity var(--dur-reveal) var(--ease-out),
     transform var(--dur-reveal) var(--ease-out);
   transition-delay: var(--reveal-delay, 0ms);
 }
-
 .reveal.is-visible {
   opacity: 1;
   transform: none;
 }
 
 /*
- * Headline reveal: the line wipes up from behind its own baseline rather
- * than fading. Used once per section so it stays an event, not a habit.
+ * Arrival sequence for the hero scale: ticks draw left to right once,
+ * then the zero tick lands. Driven by the same .is-visible class.
  */
-/*
- * The mask is an overflow window, not a clip-path on the target itself:
- * a target clipped to zero area reports as non-intersecting, so an
- * IntersectionObserver would never fire the class that un-clips it.
- * Transform also keeps the animation on the GPU.
- */
-.reveal-wipe {
-  overflow: hidden;
+.scale-tick {
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+  transition: transform 420ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 9ms);
 }
-
-.reveal-wipe > * {
-  /* Room inside the masked box for descenders. */
-  padding-bottom: 0.14em;
-  transform: translateY(104%);
-  opacity: 0;
-  transition:
-    transform 700ms var(--ease-out),
-    opacity 320ms var(--ease-out);
-  transition-delay: var(--reveal-delay, 0ms);
-}
-
-.reveal-wipe.is-visible > * {
+.is-visible .scale-tick {
   transform: none;
+}
+.zero-tick {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition:
+    opacity 300ms var(--ease-out),
+    transform 520ms cubic-bezier(0.34, 1.4, 0.64, 1);
+  transition-delay: 760ms;
+}
+.is-visible .zero-tick {
   opacity: 1;
+  transform: none;
 }
 
-/* Pressable surfaces answer the press immediately. */
+/* Lane-line strip draw: the instrument fills left to right, once. */
+.strip-draw {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 900ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  transition-delay: 200ms;
+}
+.is-visible .strip-draw {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Pressables answer the press immediately. */
 .pressable {
   transition:
     transform var(--dur-press) var(--ease-out),
+    background-color var(--dur-hover) ease,
     border-color var(--dur-hover) ease,
     color var(--dur-hover) ease;
 }
-
 .pressable:active {
   transform: scale(0.97);
 }
 
 /*
- * Channel row — the hover reward on list rows. An ember rule wipes in from
- * the left edge, the way a telemetry channel arms. Fine pointers only:
- * touch would latch it on tap.
+ * Registry row: a tint rule arms down the left edge on hover, like a
+ * channel coming live. Fine pointers only, so touch never latches it.
  */
-.channel {
+.row-arm {
   position: relative;
 }
-
-.channel::before {
+.row-arm::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 0;
-  bottom: 0;
+  top: -1px;
+  bottom: -1px;
   width: 2px;
-  background: var(--accent);
+  background: var(--tint);
   transform: scaleY(0);
   transform-origin: 50% 0;
   transition: transform 260ms var(--ease-out);
 }
-
-.channel-title {
-  transition: transform 260ms var(--ease-out);
-}
-
 @media (hover: hover) and (pointer: fine) {
-  .channel:hover::before {
+  .row-arm:hover::before {
     transform: scaleY(1);
-  }
-  .channel:hover .channel-title {
-    transform: translateX(14px);
   }
 }
 
@@ -184,62 +273,54 @@ body {
   html {
     scroll-behavior: auto;
   }
-  .reveal {
+  .reveal,
+  .zero-tick {
     transform: none;
-    transition: opacity 300ms ease;
+    transition: opacity 240ms ease;
+    transition-delay: 0ms;
   }
-  .reveal-wipe > * {
+  .scale-tick {
     transform: none;
-    transition: opacity 300ms ease;
-  }
-  .channel-title {
     transition: none;
   }
-  @media (hover: hover) and (pointer: fine) {
-    .channel:hover .channel-title {
-      transform: none;
-    }
+  .strip-draw {
+    clip-path: none;
+    transition: none;
   }
   .pressable:active {
     transform: none;
   }
 }
 
-/* Without JS the IntersectionObserver never fires — show everything. */
+/* Without JS the observer never fires, so show everything. */
 @media (scripting: none) {
   .reveal,
-  .reveal-wipe > * {
+  .zero-tick {
     opacity: 1;
     transform: none;
   }
+  .scale-tick {
+    transform: none;
+  }
+  .strip-draw {
+    clip-path: none;
+  }
 }
 
-/*
- * Screenshot rail — scrolls horizontally without a visible track. The phones
- * themselves are the affordance: one is always cut by the viewport edge.
- */
-.rail {
-  scrollbar-width: none;
-}
-
-.rail::-webkit-scrollbar {
-  display: none;
-}
-
-/* Legal pages — prose styling for the policy copy. */
+/* Legal pages: prose styling for the policy copy. */
 .legal-prose h2 {
-  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
   font-weight: 600;
-  font-size: 1.25rem;
-  letter-spacing: -0.01em;
-  margin: 2.5rem 0 0.75rem;
+  font-size: 1.125rem;
+  font-variation-settings: "wdth" 112;
+  letter-spacing: 0;
+  margin: 2.75rem 0 0.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
 }
 
 .legal-prose h3 {
-  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
   font-weight: 600;
   font-size: 1rem;
-  letter-spacing: -0.005em;
   margin: 1.75rem 0 0.5rem;
 }
 
@@ -254,7 +335,7 @@ body {
 }
 
 .legal-prose ul {
-  list-style: disc;
+  list-style: square;
   padding-left: 1.25rem;
   margin-bottom: 1rem;
 }
@@ -264,7 +345,7 @@ body {
 }
 
 .legal-prose li::marker {
-  color: var(--accent);
+  color: var(--paint);
 }
 
 .legal-prose strong {
@@ -273,23 +354,17 @@ body {
 }
 
 .legal-prose a {
-  color: var(--ink);
+  color: var(--tint);
   text-decoration: underline;
-  text-decoration-color: var(--accent);
   text-underline-offset: 3px;
 }
 
-/*
- * All-caps statutory blocks (disclaimers, liability caps). Set apart on a
- * raised panel with an accent seam — legally conspicuous without shouting
- * in the reading flow.
- */
+/* All-caps statutory blocks: set apart on a panel with a ruled edge. */
 .legal-prose .legal-caps {
   margin: 1.5rem 0;
   padding: 1.25rem 1.25rem 1.25rem 1.5rem;
-  border: 1px solid var(--hairline);
-  border-left: 2px solid var(--accent);
-  border-radius: 8px;
+  border: 1px solid var(--rule);
+  border-left: 2px solid var(--ink);
   background: var(--surface);
   color: var(--ink);
   font-size: 0.8125rem;
@@ -298,19 +373,18 @@ body {
   letter-spacing: 0.01em;
 }
 
-/* Contact block — mono label over ink value, same as the site's data rows. */
+/* Contact block: mono label over ink value, same as the site's readouts. */
 .legal-prose .legal-card {
   margin: 1.5rem 0;
   padding: 1.75rem;
-  border: 1px solid var(--hairline);
-  border-radius: 12px;
+  border: 1px solid var(--rule);
   background: var(--surface);
 }
 
 .legal-prose .legal-card dt {
-  font-family: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  font-family: var(--font-mono);
   font-size: 0.6875rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--faint);
 }

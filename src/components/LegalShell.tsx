@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import { Mark, Wordmark } from "@/components/brand/Logo";
+
 const legalPages = [
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms" },
@@ -19,35 +21,42 @@ export default function LegalShell({
   children: ReactNode;
 }) {
   return (
-    <main className="mx-auto max-w-2xl px-6 py-20 md:py-28">
-      <Link
-        href="/"
-        className="font-mono text-[11px] tracking-[0.22em] text-muted uppercase transition-colors hover:text-ink"
-      >
-        ← Velantis
-      </Link>
-      <h1 className="mt-12 text-balance font-display text-3xl font-bold tracking-tight md:text-4xl">
-        {title}
-      </h1>
-      {effectiveDate ? (
-        <p className="mt-4 font-mono text-[11px] tracking-[0.18em] text-faint uppercase">
-          Effective Date: {effectiveDate}
-        </p>
-      ) : null}
-      <div className="legal-prose mt-10">{children}</div>
-      <nav className="mt-20 flex flex-wrap gap-x-7 gap-y-3 border-t border-hairline pt-8 font-mono text-[11px] tracking-[0.18em] uppercase">
-        {legalPages
-          .filter((page) => page.href !== current)
-          .map((page) => (
-            <Link
-              key={page.href}
-              href={page.href}
-              className="text-muted transition-colors hover:text-ink"
-            >
-              {page.label}
-            </Link>
-          ))}
-      </nav>
-    </main>
+    <>
+      <header className="border-b border-rule">
+        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
+          <Link href="/" className="flex items-center gap-3" aria-label="Velantis home">
+            <Mark className="h-5 w-auto text-ink" />
+            <Wordmark cut="small" className="h-[11px] w-auto text-ink" />
+          </Link>
+          <nav className="flex gap-6">
+            {legalPages.map((page) => (
+              <Link
+                key={page.href}
+                href={page.href}
+                aria-current={page.href === current ? "page" : undefined}
+                className={`label transition-colors ${
+                  page.href === current ? "text-ink" : "text-muted hover:text-ink"
+                }`}
+              >
+                {page.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      </header>
+      <main className="mx-auto max-w-2xl px-4 py-16 sm:px-6 md:py-24">
+        <span className="label text-faint">Legal</span>
+        <h1 className="display mt-6 text-balance text-3xl md:text-4xl">{title}</h1>
+        {effectiveDate ? (
+          <p className="label mt-5 text-muted">Effective {effectiveDate}</p>
+        ) : null}
+        <div className="legal-prose mt-12">{children}</div>
+        <div className="mt-20 border-t border-rule pt-6">
+          <Link href="/" className="label text-muted transition-colors hover:text-ink">
+            &larr; Velantis
+          </Link>
+        </div>
+      </main>
+    </>
   );
 }

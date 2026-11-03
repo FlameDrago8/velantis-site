@@ -1,22 +1,22 @@
-import About from "@/components/About";
+import Company from "@/components/Company";
 import Contact from "@/components/Contact";
-import DriveSection from "@/components/DriveSection";
+import Doctrine from "@/components/Doctrine";
+import DriveSection from "@/components/drive/DriveSection";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import Nav from "@/components/Nav";
-import TripRail from "@/components/TripRail";
-import WhatsNext from "@/components/WhatsNext";
+import Programs from "@/components/Programs";
 
 export default function Home() {
   return (
     <>
       <Nav />
-      <TripRail />
       <main>
         <Hero />
+        <Doctrine />
         <DriveSection />
-        <WhatsNext />
-        <About />
+        <Programs />
+        <Company />
         <Contact />
       </main>
       <Footer />

@@ -3,22 +3,20 @@
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 
 /**
- * Reveals content on first entry into the viewport. Motion lives in
- * globals.css, which collapses to a pure opacity fade under
- * prefers-reduced-motion.
- *
- * "rise" is the workhorse fade-up. "wipe" clips a headline up from its own
- * baseline — reserved for one line per section so it stays an event.
+ * Adds .is-visible the first time the element enters the viewport. The
+ * motion itself lives in globals.css (.reveal, .scale-tick, .strip-draw),
+ * which collapses to a plain fade under prefers-reduced-motion.
+ * Pass plain={true} to arm child animations without fading the wrapper.
  */
 export default function Reveal({
   children,
   delay = 0,
-  variant = "rise",
+  plain = false,
   className = "",
 }: {
   children: ReactNode;
   delay?: number;
-  variant?: "rise" | "wipe";
+  plain?: boolean;
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -33,7 +31,7 @@ export default function Reveal({
           observer.disconnect();
         }
       },
-      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
+      { threshold: 0.15, rootMargin: "0px 0px -6% 0px" },
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -42,7 +40,7 @@ export default function Reveal({
   return (
     <div
       ref={ref}
-      className={`${variant === "wipe" ? "reveal-wipe" : "reveal"} ${className}`}
+      className={`${plain ? "" : "reveal "}${className}`}
       style={{ "--reveal-delay": `${delay}ms` } as CSSProperties}
     >
       {children}
