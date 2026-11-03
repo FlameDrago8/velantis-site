@@ -1,10 +1,14 @@
-/* TODO: point href at the real App Store listing when Drive is live. */
-const APP_STORE_URL = "#";
+/* Drive: AI Driving Coach on the US App Store. */
+const APP_STORE_URL =
+  "https://apps.apple.com/us/app/drive-ai-driving-coach/id6760790937";
 
 export default function AppStoreBadge() {
   return (
     <a
       href={APP_STORE_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Download Drive on the App Store"
       className="pressable inline-flex items-center gap-3 bg-tint-fill px-5 py-3 text-on-tint hover:bg-tint"
     >
       <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 fill-current">
